@@ -1,7 +1,9 @@
 
 package com.example.sthienpont.weatherlight;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -87,6 +89,5 @@ public class MainActivity extends AppCompatActivity {
     private void getWeather(String city) {
         String url = "http://api.openweathermap.org/data/2.5/weather?q=" + city;
         new CallWeatherAPI(tvTemperature, this).execute(url);
-
     }
 }

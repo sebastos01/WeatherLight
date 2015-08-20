@@ -1,13 +1,18 @@
 
 package com.example.sthienpont.weatherlight;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sthienpont.weatherlight.dataobjects.OpenWeather;
+import com.example.sthienpont.weatherlight.widgets.WeatherWidgetProvider;
 import com.google.gson.Gson;
 
 import java.io.BufferedInputStream;
@@ -61,12 +66,21 @@ public class CallWeatherAPI extends AsyncTask<String, String, String> {
     protected void onPostExecute(String s) {
         try {
             DecimalFormat oneDigit = new DecimalFormat("#.0");
-            view.setText(
-                    oneDigit.format(Double.parseDouble(openWeather.main.temp) - 273.15) + " °C");
+            String text = oneDigit.format(Double.parseDouble(openWeather.main.temp) - 273.15) + " °C";
+            view.setText(text);
+            updateAppWidget(text);
         } catch (NullPointerException e) {
             view.setText("N.A.");
             Toast.makeText(context, context.getString(R.string.search_error), Toast.LENGTH_SHORT)
                     .show();
         }
+    }
+
+    private void updateAppWidget(String text){
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
+        ComponentName thisWidget = new ComponentName(context, WeatherWidgetProvider.class);
+        remoteViews.setTextViewText(R.id.main, text);
+        appWidgetManager.updateAppWidget(thisWidget, remoteViews);
     }
 }
