@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">WeatherLight</string>
+
+    <string name="action_settings">About</string>
+    <string name="creator">Created by Sébastien Thienpont</string>
+
+    <string name="temperature">-/-</string>
+    <string name="button_madrid">Madrid</string>
+    <string name="search_hint">Enter a city name...</string>
+    <string name="search">Search</string>
+    <string name="search_error">Could not find city.</string>
+</resources>

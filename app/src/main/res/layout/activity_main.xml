@@ -1,0 +1,60 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:text="@string/temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvTemperature"
+        android:layout_centerHorizontal="true"
+        android:textSize="80dp"
+        android:gravity="center"
+        android:layout_marginBottom="10dp" />
+
+    <Button
+        android:id="@+id/bMadrid"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tvTemperature"
+        android:text="@string/button_madrid"
+        android:textColor="#ffffff"
+        android:background="@drawable/roundedbutton" />
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/etCity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:singleLine="true"
+            android:hint="@string/search_hint"
+            android:layout_weight="0.7" />
+
+        <Button
+            android:id="@+id/bWeather"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:text="@string/search"
+            android:textColor="#ffffff"
+            android:background="@drawable/roundedbutton" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>
