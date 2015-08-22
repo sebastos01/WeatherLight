@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/widget_margin">
+    android:padding="@dimen/widget_margin"
+    android:background="@drawable/roundedbutton">
 
-    <Button
-        android:id="@+id/main"
+    <TextView
+        android:id="@+id/tvWidgetTemperature"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/tvTemperature"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:text="@string/button_madrid"
-        android:textColor="#ffffff"
-        android:background="@drawable/roundedbutton" />
+        android:textColor="@color/weather_white"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textSize="20dp"
+         />
+    <TextView
+        android:id="@+id/tvWidgetCityName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvWidgetTemperature"
+        android:textColor="@color/weather_white"
+        android:layout_alignParentBottom="true"
+        android:textSize="12dp"
+        android:gravity="center"
+        android:singleLine="true"
+        />
 
-</FrameLayout>
+</RelativeLayout>

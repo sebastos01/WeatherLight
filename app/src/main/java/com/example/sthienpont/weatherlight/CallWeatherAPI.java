@@ -31,7 +31,9 @@ public class CallWeatherAPI extends AsyncTask<String, String, String> {
 
     public OpenWeather openWeather;
     private TextView view;
+    private String city;
     private Context context;
+
 
     public CallWeatherAPI(TextView view, Context context) {
         this.view = view;
@@ -42,7 +44,8 @@ public class CallWeatherAPI extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... strings) {
         openWeather = null;
-        String url = strings[0];
+        String url = strings[0] + strings[1];
+        city = strings[1];
         InputStream in = null;
         Log.d(TAG, "URL = " + url);
 
@@ -66,21 +69,23 @@ public class CallWeatherAPI extends AsyncTask<String, String, String> {
     protected void onPostExecute(String s) {
         try {
             DecimalFormat oneDigit = new DecimalFormat("#.0");
-            String text = oneDigit.format(Double.parseDouble(openWeather.main.temp) - 273.15) + " °C";
-            view.setText(text);
-            updateAppWidget(text);
+            String text = oneDigit.format(Double.parseDouble(openWeather.main.temp) - 273.15);
+            view.setText(text+ " °C");
+            updateAppWidget(text + "°");
         } catch (NullPointerException e) {
             view.setText("N.A.");
-            Toast.makeText(context, context.getString(R.string.search_error), Toast.LENGTH_SHORT)
+            Toast.makeText(context, context.getString(R.string.add_error), Toast.LENGTH_SHORT)
                     .show();
         }
     }
 
-    private void updateAppWidget(String text){
+    private void updateAppWidget(String temperature){
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
+
         ComponentName thisWidget = new ComponentName(context, WeatherWidgetProvider.class);
-        remoteViews.setTextViewText(R.id.main, text);
+        remoteViews.setTextViewText(R.id.tvWidgetTemperature, temperature);
+        remoteViews.setTextViewText(R.id.tvWidgetCityName,city);
         appWidgetManager.updateAppWidget(thisWidget, remoteViews);
     }
 }
