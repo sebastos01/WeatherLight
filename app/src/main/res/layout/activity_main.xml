@@ -36,8 +36,7 @@
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/tvTemperature"
-            android:text="@string/button_madrid"
-            android:textColor="#ffffff"
+            android:textColor="@color/weather_white"
             android:background="@drawable/roundedbutton"
             android:singleLine="true"
             android:padding="2dp"
@@ -51,8 +50,7 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@id/tvTemperature"
             android:padding="2dp"
-            android:text="@string/button_madrid"
-            android:textColor="#ffffff"
+            android:textColor="@color/weather_white"
             android:background="@drawable/roundedbutton"
             android:singleLine="true"
             android:layout_weight="1"/>
@@ -75,8 +73,7 @@
             android:padding="2dp"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/tvTemperature"
-            android:text="@string/button_madrid"
-            android:textColor="#ffffff"
+            android:textColor="@color/weather_white"
             android:background="@drawable/roundedbutton"
             android:singleLine="true"
             android:layout_weight="1"/>
@@ -89,8 +86,7 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@id/tvTemperature"
             android:padding="2dp"
-            android:text="@string/button_madrid"
-            android:textColor="#ffffff"
+            android:textColor="@color/weather_white"
             android:singleLine="true"
             android:background="@drawable/roundedbutton"
             android:layout_weight="1"/>
@@ -120,7 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.3"
             android:text="@string/add"
-            android:textColor="#ffffff"
+            android:textColor="@color/weather_white"
             android:singleLine="true"
             android:background="@drawable/roundedbutton" />
 

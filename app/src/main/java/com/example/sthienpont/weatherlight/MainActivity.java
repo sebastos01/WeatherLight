@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
     private View.OnLongClickListener bOnLongClickListener = new View.OnLongClickListener(){
         @Override
         public boolean onLongClick(View v) {
-            Log.d(TAG, "on long click!");
             final Button button = (Button) v;
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setMessage(getString(R.string.remove_city,button.getText().toString()))
@@ -213,19 +212,15 @@ public class MainActivity extends AppCompatActivity {
             if(bOne.getVisibility() != View.VISIBLE){
                 bOne.setText(s);
                 bOne.setVisibility(View.VISIBLE);
-                Log.i(TAG,"setting button one to " + s);
             } else if(bTwo.getVisibility() != View.VISIBLE){
                 bTwo.setText(s);
                 bTwo.setVisibility(View.VISIBLE);
-                Log.i(TAG, "setting button two to " + s);
             } else if(bThree.getVisibility() != View.VISIBLE){
                 bThree.setText(s);
                 bThree.setVisibility(View.VISIBLE);
-                Log.i(TAG, "setting button three to " + s);
             }else if(bFour.getVisibility() != View.VISIBLE){
                 bFour.setText(s);
                 bFour.setVisibility(View.VISIBLE);
-                Log.i(TAG, "setting button four to " + s);
             }
         }
     }
@@ -273,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
         Gson gson = new Gson();
         String userData = gson.toJson(preferences);
-        Log.v(TAG,"saving preferences: " +userData);
+        Log.d(TAG,"saving preferences: " +userData);
         editor.putString(USER_DATA, userData);
         editor.apply();
     }
@@ -281,10 +276,9 @@ public class MainActivity extends AppCompatActivity {
     private void loadPreferences(){
         SharedPreferences prefs = getPreferences(MODE_PRIVATE);
         String userData = prefs.getString(USER_DATA, null);
-        Log.v(TAG,"Found preferences = " + userData);
+        Log.d(TAG,"Found preferences = " + userData);
         preferences = (new Gson()).fromJson(userData, Preferences.class);
         if(preferences == null){
-            Log.d(TAG,"Prefences after converting is null");
             preferences = new Preferences();
         }
     }

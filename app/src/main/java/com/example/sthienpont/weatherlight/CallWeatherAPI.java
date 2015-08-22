@@ -4,9 +4,7 @@ package com.example.sthienpont.weatherlight;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,7 +45,6 @@ public class CallWeatherAPI extends AsyncTask<String, String, String> {
         String url = strings[0] + strings[1];
         city = strings[1];
         InputStream in = null;
-        Log.d(TAG, "URL = " + url);
 
         try {
             URL call = new URL(url);

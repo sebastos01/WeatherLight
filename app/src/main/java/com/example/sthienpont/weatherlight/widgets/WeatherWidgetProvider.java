@@ -13,8 +13,7 @@ import com.example.sthienpont.weatherlight.MainActivity;
 import com.example.sthienpont.weatherlight.R;
 
 public class WeatherWidgetProvider extends AppWidgetProvider {
-
-    public static final String DEBUG_TAG = "WeatherWidgetProvider";
+    public static final String TAG = "WeatherWidgetProvider";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,
@@ -23,7 +22,7 @@ public class WeatherWidgetProvider extends AppWidgetProvider {
         try {
             updateWidgetContent(context, appWidgetManager);
         } catch (Exception e) {
-            Log.e(DEBUG_TAG, "Failed", e);
+            Log.e(TAG, "Failed", e);
         }
     }
 
