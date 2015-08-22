@@ -32,7 +32,6 @@ public class CallWeatherAPI extends AsyncTask<String, String, String> {
     private String city;
     private Context context;
 
-
     public CallWeatherAPI(TextView view, Context context) {
         this.view = view;
         this.context = context;
@@ -67,7 +66,7 @@ public class CallWeatherAPI extends AsyncTask<String, String, String> {
         try {
             DecimalFormat oneDigit = new DecimalFormat("#.0");
             String text = oneDigit.format(Double.parseDouble(openWeather.main.temp) - 273.15);
-            view.setText(text+ " °C");
+            view.setText(text + " °C");
             updateAppWidget(text + "°");
         } catch (NullPointerException e) {
             view.setText("N.A.");
@@ -76,13 +75,13 @@ public class CallWeatherAPI extends AsyncTask<String, String, String> {
         }
     }
 
-    private void updateAppWidget(String temperature){
+    private void updateAppWidget(String temperature) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
 
         ComponentName thisWidget = new ComponentName(context, WeatherWidgetProvider.class);
         remoteViews.setTextViewText(R.id.tvWidgetTemperature, temperature);
-        remoteViews.setTextViewText(R.id.tvWidgetCityName,city);
+        remoteViews.setTextViewText(R.id.tvWidgetCityName, city);
         appWidgetManager.updateAppWidget(thisWidget, remoteViews);
     }
 }

@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                     InputMethodManager.HIDE_NOT_ALWAYS);
             String city = etCity.getText().toString();
             city = city.isEmpty() ? "" : Character.toUpperCase(city.charAt(0)) + city.substring(1);
-            if(evaluateCity(city)) {
+            if (evaluateCity(city)) {
                 getWeather(city);
                 saveCityToPreferencesAndReloadScreen(city);
             }
@@ -54,25 +54,23 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private boolean evaluateCity(String city) {
-        if(city.isEmpty()){
-            Toast.makeText(this, getString(R.string.add_error_empty), Toast.LENGTH_SHORT)
-                    .show();
+        if (city.isEmpty()) {
+            Toast.makeText(this, getString(R.string.add_error_empty), Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(preferences.cities.contains(city)){
+        if (preferences.cities.contains(city)) {
             Toast.makeText(this, getString(R.string.add_error_duplicate, city), Toast.LENGTH_SHORT)
                     .show();
             return false;
         }
-        if(preferences.cities.size() >= 4){
-            Toast.makeText(this, getString(R.string.add_error_full), Toast.LENGTH_SHORT)
-                    .show();
+        if (preferences.cities.size() >= 4) {
+            Toast.makeText(this, getString(R.string.add_error_full), Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
     }
 
-    private View.OnClickListener bOnClickListener = new View.OnClickListener(){
+    private View.OnClickListener bOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Button button = (Button) v;
@@ -84,31 +82,30 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private View.OnLongClickListener bOnLongClickListener = new View.OnLongClickListener(){
+    private View.OnLongClickListener bOnLongClickListener = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
             final Button button = (Button) v;
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setMessage(getString(R.string.remove_city,button.getText().toString()))
+            builder.setMessage(getString(R.string.remove_city, button.getText().toString()))
                     .setPositiveButton(R.string.remove, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            preferences.cities.remove(button.getText().toString());
-                            if(!preferences.cities.contains(preferences.currentCity)){
-                                if(preferences.cities.isEmpty()){
-                                    preferences.currentCity = "";
-                                } else{
-                                    preferences.currentCity = preferences.cities.get(0);
-                                }
-                            }
-                            savePreferences();
-                            updateButtons();
+                public void onClick(DialogInterface dialog, int id) {
+                    preferences.cities.remove(button.getText().toString());
+                    if (!preferences.cities.contains(preferences.currentCity)) {
+                        if (preferences.cities.isEmpty()) {
+                            preferences.currentCity = "";
+                        } else {
+                            preferences.currentCity = preferences.cities.get(0);
                         }
-                    })
-                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // close dialog
-                        }
-                    });
+                    }
+                    savePreferences();
+                    updateButtons();
+                }
+            }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // close dialog
+                }
+            });
             builder.create().show();
             return true;
         }
@@ -179,53 +176,53 @@ public class MainActivity extends AppCompatActivity {
         updateButtons();
     }
 
-    private void updateButtons(){
+    private void updateButtons() {
         loadPreferences();
         hideAllButtons();
         setCityButtonsFromPreferences();
         switchCurrentCityButtonColor();
-        if(!preferences.currentCity.isEmpty()){
+        if (!preferences.currentCity.isEmpty()) {
             getWeather(preferences.currentCity);
-        } else{
+        } else {
             tvTemperature.setText(getString(R.string.temperature));
         }
     }
 
     private void switchCurrentCityButtonColor() {
         String city = preferences.currentCity;
-        if(city.equalsIgnoreCase(bOne.getText().toString())){
+        if (city.equalsIgnoreCase(bOne.getText().toString())) {
             switchButtonColor(bOne);
         }
-        if(city.equalsIgnoreCase(bTwo.getText().toString())){
+        if (city.equalsIgnoreCase(bTwo.getText().toString())) {
             switchButtonColor(bTwo);
         }
-        if(city.equalsIgnoreCase(bThree.getText().toString())){
+        if (city.equalsIgnoreCase(bThree.getText().toString())) {
             switchButtonColor(bThree);
         }
-        if(city.equalsIgnoreCase(bFour.getText().toString())){
+        if (city.equalsIgnoreCase(bFour.getText().toString())) {
             switchButtonColor(bFour);
         }
     }
 
     private void setCityButtonsFromPreferences() {
-        for(String s : preferences.cities){
-            if(bOne.getVisibility() != View.VISIBLE){
+        for (String s : preferences.cities) {
+            if (bOne.getVisibility() != View.VISIBLE) {
                 bOne.setText(s);
                 bOne.setVisibility(View.VISIBLE);
-            } else if(bTwo.getVisibility() != View.VISIBLE){
+            } else if (bTwo.getVisibility() != View.VISIBLE) {
                 bTwo.setText(s);
                 bTwo.setVisibility(View.VISIBLE);
-            } else if(bThree.getVisibility() != View.VISIBLE){
+            } else if (bThree.getVisibility() != View.VISIBLE) {
                 bThree.setText(s);
                 bThree.setVisibility(View.VISIBLE);
-            }else if(bFour.getVisibility() != View.VISIBLE){
+            } else if (bFour.getVisibility() != View.VISIBLE) {
                 bFour.setText(s);
                 bFour.setVisibility(View.VISIBLE);
             }
         }
     }
 
-    private void hideAllButtons(){
+    private void hideAllButtons() {
         bOne.setVisibility(View.INVISIBLE);
         bOne.setText("");
         bTwo.setVisibility(View.INVISIBLE);
@@ -236,49 +233,49 @@ public class MainActivity extends AppCompatActivity {
         bFour.setText("");
     }
 
-    private void switchButtonColor(Button button){
+    private void switchButtonColor(Button button) {
 
-        if(button.getText() == bOne.getText()){
+        if (button.getText() == bOne.getText()) {
             bOne.setBackground(ContextCompat.getDrawable(this, R.drawable.roundedbutton_clicked));
-        } else{
+        } else {
             bOne.setBackground(ContextCompat.getDrawable(this, R.drawable.roundedbutton));
         }
-        if(button.getText() == bTwo.getText()){
+        if (button.getText() == bTwo.getText()) {
             bTwo.setBackground(ContextCompat.getDrawable(this, R.drawable.roundedbutton_clicked));
-        } else{
+        } else {
             bTwo.setBackground(ContextCompat.getDrawable(this, R.drawable.roundedbutton));
         }
-        if(button.getText() == bThree.getText()){
+        if (button.getText() == bThree.getText()) {
             bThree.setBackground(ContextCompat.getDrawable(this, R.drawable.roundedbutton_clicked));
-        } else{
+        } else {
             bThree.setBackground(ContextCompat.getDrawable(this, R.drawable.roundedbutton));
         }
-        if(button.getText() == bFour.getText()){
+        if (button.getText() == bFour.getText()) {
             bFour.setBackground(ContextCompat.getDrawable(this, R.drawable.roundedbutton_clicked));
-        } else{
+        } else {
             bFour.setBackground(ContextCompat.getDrawable(this, R.drawable.roundedbutton));
         }
     }
 
     private void getWeather(String city) {
-        new CallWeatherAPI(tvTemperature, this).execute(getString(R.string.api_url),city);
+        new CallWeatherAPI(tvTemperature, this).execute(getString(R.string.api_url), city);
     }
 
-    private void savePreferences(){
+    private void savePreferences() {
         SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
         Gson gson = new Gson();
         String userData = gson.toJson(preferences);
-        Log.d(TAG,"saving preferences: " +userData);
+        Log.d(TAG, "saving preferences: " + userData);
         editor.putString(USER_DATA, userData);
         editor.apply();
     }
 
-    private void loadPreferences(){
+    private void loadPreferences() {
         SharedPreferences prefs = getPreferences(MODE_PRIVATE);
         String userData = prefs.getString(USER_DATA, null);
-        Log.d(TAG,"Found preferences = " + userData);
+        Log.d(TAG, "Found preferences = " + userData);
         preferences = (new Gson()).fromJson(userData, Preferences.class);
-        if(preferences == null){
+        if (preferences == null) {
             preferences = new Preferences();
         }
     }

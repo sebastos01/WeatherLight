@@ -1,3 +1,4 @@
+
 package com.example.sthienpont.weatherlight.widgets;
 
 import android.app.PendingIntent;
@@ -16,8 +17,7 @@ public class WeatherWidgetProvider extends AppWidgetProvider {
     public static final String TAG = "WeatherWidgetProvider";
 
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager,
-                         int[] appWidgetIds) {
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
         try {
             updateWidgetContent(context, appWidgetManager);
@@ -26,21 +26,16 @@ public class WeatherWidgetProvider extends AppWidgetProvider {
         }
     }
 
-    public static void updateWidgetContent(Context context,
-                                           AppWidgetManager appWidgetManager) {
+    public static void updateWidgetContent(Context context, AppWidgetManager appWidgetManager) {
 
-
-
-        RemoteViews remoteView = new RemoteViews(context.getPackageName(),
-                R.layout.widget_main);
+        RemoteViews remoteView = new RemoteViews(context.getPackageName(), R.layout.widget_main);
 
         Intent launchAppIntent = new Intent(context, MainActivity.class);
-        PendingIntent launchAppPendingIntent = PendingIntent.getActivity(context,
-                0, launchAppIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent launchAppPendingIntent = PendingIntent.getActivity(context, 0,
+                launchAppIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteView.setOnClickPendingIntent(R.id.main, launchAppPendingIntent);
 
-        ComponentName tutListWidget = new ComponentName(context,
-                WeatherWidgetProvider.class);
+        ComponentName tutListWidget = new ComponentName(context, WeatherWidgetProvider.class);
         appWidgetManager.updateAppWidget(tutListWidget, remoteView);
     }
 }
