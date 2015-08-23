@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class CallWeatherAPI extends AsyncTask<String, String, String> {
         InputStream in = null;
 
         try {
+            Log.d(TAG, "Calling: " + url);
             URL call = new URL(url);
             HttpURLConnection urlConnection = (HttpURLConnection) call.openConnection();
             in = new BufferedInputStream(urlConnection.getInputStream());

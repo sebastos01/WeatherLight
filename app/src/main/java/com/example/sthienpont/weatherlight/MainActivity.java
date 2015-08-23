@@ -1,10 +1,12 @@
 
 package com.example.sthienpont.weatherlight;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -18,13 +20,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sthienpont.weatherlight.broadcastreceivers.WeatherReceiver;
 import com.example.sthienpont.weatherlight.dataobjects.Preferences;
-import com.google.gson.Gson;
+import com.example.sthienpont.weatherlight.utils.PreferenceHelper;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
-    private static final String USER_DATA = "userData";
+    private static final int RECURRING_TASK_INTERVAL_IN_MINUTES = 20;
 
     private TextView tvTemperature;
     private Button bWeather;
@@ -78,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             String city = button.getText().toString();
             getWeather(city);
             preferences.currentCity = city;
-            savePreferences();
+            PreferenceHelper.savePreferences(getApplicationContext(), preferences);
         }
     };
 
@@ -98,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                             preferences.currentCity = preferences.cities.get(0);
                         }
                     }
-                    savePreferences();
+                    PreferenceHelper.savePreferences(getApplicationContext(), preferences);
                     updateButtons();
                 }
             }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -138,6 +141,8 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
+
+        startUpWeatherService();
     }
 
     @Override
@@ -172,12 +177,12 @@ public class MainActivity extends AppCompatActivity {
     private void saveCityToPreferencesAndReloadScreen(String city) {
         preferences.cities.add(city);
         preferences.currentCity = city;
-        savePreferences();
+        PreferenceHelper.savePreferences(this, preferences);
         updateButtons();
     }
 
     private void updateButtons() {
-        loadPreferences();
+        preferences = PreferenceHelper.loadPreferences(this);
         hideAllButtons();
         setCityButtonsFromPreferences();
         switchCurrentCityButtonColor();
@@ -261,22 +266,13 @@ public class MainActivity extends AppCompatActivity {
         new CallWeatherAPI(tvTemperature, this).execute(getString(R.string.api_url), city);
     }
 
-    private void savePreferences() {
-        SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
-        Gson gson = new Gson();
-        String userData = gson.toJson(preferences);
-        Log.d(TAG, "saving preferences: " + userData);
-        editor.putString(USER_DATA, userData);
-        editor.apply();
-    }
-
-    private void loadPreferences() {
-        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
-        String userData = prefs.getString(USER_DATA, null);
-        Log.d(TAG, "Found preferences = " + userData);
-        preferences = (new Gson()).fromJson(userData, Preferences.class);
-        if (preferences == null) {
-            preferences = new Preferences();
-        }
+    private void startUpWeatherService() {
+        Intent weatherIntent = new Intent(this, WeatherReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, weatherIntent,
+                PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
+                RECURRING_TASK_INTERVAL_IN_MINUTES * 60000, pendingIntent);
+        Log.d(TAG, "ALARM HAS BEEN SET");
     }
 }
