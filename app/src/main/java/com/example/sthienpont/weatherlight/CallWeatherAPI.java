@@ -8,11 +8,11 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sthienpont.weatherlight.dataobjects.OpenWeather;
 import com.example.sthienpont.weatherlight.utils.PreferenceHelper;
+import com.example.sthienpont.weatherlight.views.WeatherBox;
 import com.example.sthienpont.weatherlight.widgets.WeatherWidgetProvider;
 import com.google.gson.Gson;
 
@@ -34,13 +34,14 @@ public class CallWeatherAPI extends AsyncTask<String, String, String> {
     private static final String CONNECTION_ERROR = "connectionerror";
 
     public OpenWeather openWeather;
-    private TextView view;
+    private WeatherBox weatherBox;
     private String city;
     private Context context;
     private boolean isCalledFromMainActivity;
 
-    public CallWeatherAPI(TextView view, Context context, boolean isCalledFromMainActivity) {
-        this.view = view;
+    public CallWeatherAPI(WeatherBox weatherBox, Context context,
+            boolean isCalledFromMainActivity) {
+        this.weatherBox = weatherBox;
         this.context = context;
         openWeather = null;
         this.isCalledFromMainActivity = isCalledFromMainActivity;
@@ -88,10 +89,17 @@ public class CallWeatherAPI extends AsyncTask<String, String, String> {
         try {
             DecimalFormat oneDigit = new DecimalFormat("#.0");
             String text = oneDigit.format(Double.parseDouble(openWeather.main.temp) - 273.15);
-            view.setText(text + " °C");
+            if (weatherBox != null) {
+                weatherBox.setCity(context.getString(R.string.city) + " " + openWeather.name + " ("
+                        + openWeather.sys.country + ")");
+                weatherBox.setTemperature(text + " °C");
+                weatherBox.setClouds(openWeather.weather.get(0).description);
+            }
             updateAppWidget(text + "°");
         } catch (NullPointerException e) {
-            view.setText("N.A.");
+            if (weatherBox != null) {
+                weatherBox.setNoWeatherInfo();
+            }
             showFeedBack(context.getString(R.string.add_error));
         }
     }
