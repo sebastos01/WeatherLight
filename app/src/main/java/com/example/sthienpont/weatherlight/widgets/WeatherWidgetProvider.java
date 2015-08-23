@@ -14,7 +14,7 @@ import com.example.sthienpont.weatherlight.MainActivity;
 import com.example.sthienpont.weatherlight.R;
 
 public class WeatherWidgetProvider extends AppWidgetProvider {
-    public static final String TAG = "WeatherWidgetProvider";
+    private static final String TAG = "WeatherWidgetProvider";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -25,7 +25,7 @@ public class WeatherWidgetProvider extends AppWidgetProvider {
         }
     }
 
-    public static void updateWidgetContent(Context context, AppWidgetManager appWidgetManager) {
+    private void updateWidgetContent(Context context, AppWidgetManager appWidgetManager) {
         RemoteViews remoteView = new RemoteViews(context.getPackageName(), R.layout.widget_main);
 
         Intent launchAppIntent = new Intent(context, MainActivity.class);

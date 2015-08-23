@@ -33,9 +33,8 @@ public class CallWeatherAPI extends AsyncTask<String, String, String> {
     private static final String NO_CITY = "nocity";
     private static final String CONNECTION_ERROR = "connectionerror";
 
-    public OpenWeather openWeather;
+    private OpenWeather openWeather;
     private WeatherBox weatherBox;
-    private String city;
     private Context context;
     private boolean isCalledFromMainActivity;
 
@@ -50,13 +49,13 @@ public class CallWeatherAPI extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... strings) {
         openWeather = null;
-        city = PreferenceHelper.loadPreferences(context).currentCity;
+        String city = PreferenceHelper.loadPreferences(context).currentCity;
         if (city.isEmpty()) {
             return NO_CITY;
         }
 
         String url = context.getString(R.string.api_url) + city;
-        InputStream in = null;
+        InputStream in;
 
         try {
             Log.d(TAG, "Calling: " + url);

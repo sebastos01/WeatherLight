@@ -78,8 +78,7 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             Button button = (Button) v;
             switchButtonColor(button);
-            String city = button.getText().toString();
-            preferences.currentCity = city;
+            preferences.currentCity = button.getText().toString();
             PreferenceHelper.savePreferences(getApplicationContext(), preferences);
             getWeather();
 
