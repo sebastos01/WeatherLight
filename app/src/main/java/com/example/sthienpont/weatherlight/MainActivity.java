@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                     Context.INPUT_METHOD_SERVICE);
             inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
                     InputMethodManager.HIDE_NOT_ALWAYS);
-            String city = etCity.getText().toString();
+            String city = etCity.getText().toString().replace(" ", "");
             city = city.isEmpty() ? "" : Character.toUpperCase(city.charAt(0)) + city.substring(1);
             if (evaluateCity(city)) {
                 getWeather(city);
