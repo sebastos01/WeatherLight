@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getWeather() {
-        new CallWeatherAPI(tvTemperature, this).execute(getString(R.string.api_url));
+        new CallWeatherAPI(tvTemperature, this, true).execute();
     }
 
     private void startUpWeatherService() {

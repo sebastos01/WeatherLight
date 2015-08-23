@@ -30,22 +30,31 @@ import java.text.DecimalFormat;
 public class CallWeatherAPI extends AsyncTask<String, String, String> {
     private static final String TAG = "CallWeatherAPI";
 
+    private static final String NO_CITY = "nocity";
+    private static final String CONNECTION_ERROR = "connectionerror";
+
     public OpenWeather openWeather;
     private TextView view;
     private String city;
     private Context context;
+    private boolean isCalledFromMainActivity;
 
-    public CallWeatherAPI(TextView view, Context context) {
+    public CallWeatherAPI(TextView view, Context context, boolean isCalledFromMainActivity) {
         this.view = view;
         this.context = context;
         openWeather = null;
+        this.isCalledFromMainActivity = isCalledFromMainActivity;
     }
 
     @Override
     protected String doInBackground(String... strings) {
         openWeather = null;
         city = PreferenceHelper.loadPreferences(context).currentCity;
-        String url = strings[0] + city;
+        if (city.isEmpty()) {
+            return NO_CITY;
+        }
+
+        String url = context.getString(R.string.api_url) + city;
         InputStream in = null;
 
         try {
@@ -54,7 +63,8 @@ public class CallWeatherAPI extends AsyncTask<String, String, String> {
             HttpURLConnection urlConnection = (HttpURLConnection) call.openConnection();
             in = new BufferedInputStream(urlConnection.getInputStream());
         } catch (Exception e) {
-            return "";
+            Log.e(TAG, "Exception: " + e.getMessage());
+            return CONNECTION_ERROR;
         }
 
         Gson gson = new Gson();
@@ -66,7 +76,15 @@ public class CallWeatherAPI extends AsyncTask<String, String, String> {
     }
 
     @Override
-    protected void onPostExecute(String s) {
+    protected void onPostExecute(String result) {
+        if (result.equals(NO_CITY)) {
+            return;
+        }
+        if (result.equals(CONNECTION_ERROR)) {
+            showFeedBack(context.getString(R.string.connection_error));
+            return;
+        }
+
         try {
             DecimalFormat oneDigit = new DecimalFormat("#.0");
             String text = oneDigit.format(Double.parseDouble(openWeather.main.temp) - 273.15);
@@ -74,8 +92,7 @@ public class CallWeatherAPI extends AsyncTask<String, String, String> {
             updateAppWidget(text + "°");
         } catch (NullPointerException e) {
             view.setText("N.A.");
-            Toast.makeText(context, context.getString(R.string.add_error), Toast.LENGTH_SHORT)
-                    .show();
+            showFeedBack(context.getString(R.string.add_error));
         }
     }
 
@@ -126,6 +143,12 @@ public class CallWeatherAPI extends AsyncTask<String, String, String> {
         if (icon.contains("50")) {
             remoteViews.setImageViewResource(R.id.ivWidgetIcon, R.drawable.ic_50);
             remoteViews.setViewVisibility(R.id.ivWidgetIcon, View.VISIBLE);
+        }
+    }
+
+    private void showFeedBack(String text) {
+        if (isCalledFromMainActivity) {
+            Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
         }
     }
 }

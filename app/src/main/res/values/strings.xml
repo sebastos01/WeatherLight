@@ -15,6 +15,7 @@
     <string name="add_error_duplicate">%s is already added to your list.</string>
     <string name="add_error_full">You can only have 4 cities, please remove one before adding a new one.</string>
 
+    <string name="connection_error">There was an error getting the weather data.</string>
 
     <string name="remove_city">Do you want to remove %s?</string>
     <string name="remove">Remove</string>
