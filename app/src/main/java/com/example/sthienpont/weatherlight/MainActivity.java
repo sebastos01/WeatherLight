@@ -273,6 +273,6 @@ public class MainActivity extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
                 RECURRING_TASK_INTERVAL_IN_MINUTES * 60000, pendingIntent);
-        Log.d(TAG, "ALARM HAS BEEN SET");
+        Log.d(TAG, "Weather Service has been setup");
     }
 }

@@ -20,7 +20,7 @@ public class WeatherReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(TAG, "Executing task");
+        Log.v(TAG, "Executing task");
         Preferences preferences = PreferenceHelper.loadPreferences(context);
         if (!preferences.currentCity.isEmpty()) {
             new CallWeatherAPI(new TextView(context), context)

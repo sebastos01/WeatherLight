@@ -18,16 +18,14 @@ public class WeatherWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-
         try {
             updateWidgetContent(context, appWidgetManager);
         } catch (Exception e) {
-            Log.e(TAG, "Failed", e);
+            Log.e(TAG, "Failed :" + e.getLocalizedMessage());
         }
     }
 
     public static void updateWidgetContent(Context context, AppWidgetManager appWidgetManager) {
-
         RemoteViews remoteView = new RemoteViews(context.getPackageName(), R.layout.widget_main);
 
         Intent launchAppIntent = new Intent(context, MainActivity.class);
@@ -35,7 +33,7 @@ public class WeatherWidgetProvider extends AppWidgetProvider {
                 launchAppIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteView.setOnClickPendingIntent(R.id.main, launchAppPendingIntent);
 
-        ComponentName tutListWidget = new ComponentName(context, WeatherWidgetProvider.class);
-        appWidgetManager.updateAppWidget(tutListWidget, remoteView);
+        ComponentName weatherWidget = new ComponentName(context, WeatherWidgetProvider.class);
+        appWidgetManager.updateAppWidget(weatherWidget, remoteView);
     }
 }

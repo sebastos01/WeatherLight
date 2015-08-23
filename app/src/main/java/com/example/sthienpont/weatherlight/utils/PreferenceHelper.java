@@ -21,7 +21,7 @@ public class PreferenceHelper {
                 .edit();
         Gson gson = new Gson();
         String userData = gson.toJson(preferences);
-        Log.d(TAG, "Saving preferences: [" + userData + "]");
+        Log.v(TAG, "Saving preferences: [" + userData + "]");
         editor.putString(USER_DATA, userData);
         editor.apply();
     }
@@ -29,7 +29,7 @@ public class PreferenceHelper {
     public static Preferences loadPreferences(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String userData = prefs.getString(USER_DATA, null);
-        Log.d(TAG, "Loading preferences: [" + userData + "]");
+        Log.v(TAG, "Loading preferences: [" + userData + "]");
         Preferences preferences = (new Gson()).fromJson(userData, Preferences.class);
         if (preferences == null) {
             preferences = new Preferences();
