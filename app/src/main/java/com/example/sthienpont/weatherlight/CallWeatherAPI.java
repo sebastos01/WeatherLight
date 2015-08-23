@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -81,7 +82,47 @@ public class CallWeatherAPI extends AsyncTask<String, String, String> {
 
         ComponentName thisWidget = new ComponentName(context, WeatherWidgetProvider.class);
         remoteViews.setTextViewText(R.id.tvWidgetTemperature, temperature);
-        remoteViews.setTextViewText(R.id.tvWidgetCityName, city);
+        remoteViews.setTextViewText(R.id.tvWidgetCityName, openWeather.name);
+        setIconWidgetIcon(remoteViews, openWeather.weather.get(0).icon);
         appWidgetManager.updateAppWidget(thisWidget, remoteViews);
+    }
+
+    private void setIconWidgetIcon(RemoteViews remoteViews, String icon) {
+        if (icon.contains("01")) {
+            remoteViews.setImageViewResource(R.id.ivWidgetIcon, R.drawable.ic_01);
+            remoteViews.setViewVisibility(R.id.ivWidgetIcon, View.VISIBLE);
+        }
+        if (icon.contains("02")) {
+            remoteViews.setImageViewResource(R.id.ivWidgetIcon, R.drawable.ic_02);
+            remoteViews.setViewVisibility(R.id.ivWidgetIcon, View.VISIBLE);
+        }
+        if (icon.contains("03")) {
+            remoteViews.setImageViewResource(R.id.ivWidgetIcon, R.drawable.ic_03);
+            remoteViews.setViewVisibility(R.id.ivWidgetIcon, View.VISIBLE);
+        }
+        if (icon.contains("04")) {
+            remoteViews.setImageViewResource(R.id.ivWidgetIcon, R.drawable.ic_04);
+            remoteViews.setViewVisibility(R.id.ivWidgetIcon, View.VISIBLE);
+        }
+        if (icon.contains("09")) {
+            remoteViews.setImageViewResource(R.id.ivWidgetIcon, R.drawable.ic_09);
+            remoteViews.setViewVisibility(R.id.ivWidgetIcon, View.VISIBLE);
+        }
+        if (icon.contains("10")) {
+            remoteViews.setImageViewResource(R.id.ivWidgetIcon, R.drawable.ic_10);
+            remoteViews.setViewVisibility(R.id.ivWidgetIcon, View.VISIBLE);
+        }
+        if (icon.contains("11")) {
+            remoteViews.setImageViewResource(R.id.ivWidgetIcon, R.drawable.ic_11);
+            remoteViews.setViewVisibility(R.id.ivWidgetIcon, View.VISIBLE);
+        }
+        if (icon.contains("13")) {
+            remoteViews.setImageViewResource(R.id.ivWidgetIcon, R.drawable.ic_13);
+            remoteViews.setViewVisibility(R.id.ivWidgetIcon, View.VISIBLE);
+        }
+        if (icon.contains("50")) {
+            remoteViews.setImageViewResource(R.id.ivWidgetIcon, R.drawable.ic_50);
+            remoteViews.setViewVisibility(R.id.ivWidgetIcon, View.VISIBLE);
+        }
     }
 }
