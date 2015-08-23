@@ -24,9 +24,6 @@ import com.google.gson.Gson;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
-    /**
-     * Keyword
-     */
     private static final String USER_DATA = "userData";
 
     private TextView tvTemperature;
