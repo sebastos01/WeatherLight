@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.example.sthienpont.weatherlight.CallWeatherAPI;
 import com.example.sthienpont.weatherlight.dataobjects.Preferences;
@@ -22,7 +21,7 @@ public class WeatherReceiver extends BroadcastReceiver {
         Log.v(TAG, "Executing task");
         Preferences preferences = PreferenceHelper.loadPreferences(context);
         if (!preferences.currentCity.isEmpty()) {
-            new CallWeatherAPI(new TextView(context), context, false).execute();
+            new CallWeatherAPI(null, context, false).execute();
         }
     }
 }

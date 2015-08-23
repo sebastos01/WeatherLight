@@ -17,19 +17,19 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sthienpont.weatherlight.broadcastreceivers.WeatherReceiver;
 import com.example.sthienpont.weatherlight.dataobjects.Preferences;
 import com.example.sthienpont.weatherlight.utils.PreferenceHelper;
+import com.example.sthienpont.weatherlight.views.WeatherBox;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private static final int RECURRING_TASK_INTERVAL_IN_MINUTES = 20;
 
-    private TextView tvTemperature;
+    private WeatherBox wbWeatherInfo;
     private Button bWeather;
     private EditText etCity;
 
@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
             city = city.isEmpty() ? "" : Character.toUpperCase(city.charAt(0)) + city.substring(1);
             if (evaluateCity(city)) {
                 saveCityToPreferencesAndReloadScreen(city);
+                etCity.getText().clear();
             }
         }
     };
@@ -119,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tvTemperature = (TextView) findViewById(R.id.tvTemperature);
+        wbWeatherInfo = (WeatherBox) findViewById(R.id.wbWeatherInfo);
         bWeather = (Button) findViewById(R.id.bWeather);
         etCity = (EditText) findViewById(R.id.etCity);
         bOne = (Button) findViewById(R.id.bOne);
@@ -189,7 +190,8 @@ public class MainActivity extends AppCompatActivity {
         if (!preferences.currentCity.isEmpty()) {
             getWeather();
         } else {
-            tvTemperature.setText(getString(R.string.temperature));
+            wbWeatherInfo.setNoWeatherInfo();
+            wbWeatherInfo.setTemperature(getString(R.string.temperature));
         }
     }
 
@@ -263,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getWeather() {
-        new CallWeatherAPI(tvTemperature, this, true).execute();
+        new CallWeatherAPI(wbWeatherInfo, this, true).execute();
     }
 
     private void startUpWeatherService() {
