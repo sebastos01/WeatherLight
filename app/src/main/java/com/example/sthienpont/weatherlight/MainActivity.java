@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
             String city = etCity.getText().toString().replace(" ", "");
             city = city.isEmpty() ? "" : Character.toUpperCase(city.charAt(0)) + city.substring(1);
             if (evaluateCity(city)) {
-                getWeather(city);
                 saveCityToPreferencesAndReloadScreen(city);
             }
         }
