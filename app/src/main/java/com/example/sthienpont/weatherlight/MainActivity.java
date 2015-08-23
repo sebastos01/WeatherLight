@@ -78,9 +78,10 @@ public class MainActivity extends AppCompatActivity {
             Button button = (Button) v;
             switchButtonColor(button);
             String city = button.getText().toString();
-            getWeather(city);
             preferences.currentCity = city;
             PreferenceHelper.savePreferences(getApplicationContext(), preferences);
+            getWeather();
+
         }
     };
 
@@ -186,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
         setCityButtonsFromPreferences();
         switchCurrentCityButtonColor();
         if (!preferences.currentCity.isEmpty()) {
-            getWeather(preferences.currentCity);
+            getWeather();
         } else {
             tvTemperature.setText(getString(R.string.temperature));
         }
@@ -261,8 +262,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getWeather(String city) {
-        new CallWeatherAPI(tvTemperature, this).execute(getString(R.string.api_url), city);
+    private void getWeather() {
+        new CallWeatherAPI(tvTemperature, this).execute(getString(R.string.api_url));
     }
 
     private void startUpWeatherService() {

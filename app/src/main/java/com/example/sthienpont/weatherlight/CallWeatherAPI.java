@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sthienpont.weatherlight.dataobjects.OpenWeather;
+import com.example.sthienpont.weatherlight.utils.PreferenceHelper;
 import com.example.sthienpont.weatherlight.widgets.WeatherWidgetProvider;
 import com.google.gson.Gson;
 
@@ -43,8 +44,8 @@ public class CallWeatherAPI extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... strings) {
         openWeather = null;
-        String url = strings[0] + strings[1];
-        city = strings[1];
+        city = PreferenceHelper.loadPreferences(context).currentCity;
+        String url = strings[0] + city;
         InputStream in = null;
 
         try {
