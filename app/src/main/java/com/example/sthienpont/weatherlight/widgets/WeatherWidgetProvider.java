@@ -1,3 +1,4 @@
+
 package com.example.sthienpont.weatherlight.widgets;
 
 import android.app.PendingIntent;
@@ -13,35 +14,26 @@ import com.example.sthienpont.weatherlight.MainActivity;
 import com.example.sthienpont.weatherlight.R;
 
 public class WeatherWidgetProvider extends AppWidgetProvider {
-
-    public static final String DEBUG_TAG = "WeatherWidgetProvider";
+    private static final String TAG = "WeatherWidgetProvider";
 
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager,
-                         int[] appWidgetIds) {
-
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         try {
             updateWidgetContent(context, appWidgetManager);
         } catch (Exception e) {
-            Log.e(DEBUG_TAG, "Failed", e);
+            Log.e(TAG, "Failed :" + e.getLocalizedMessage());
         }
     }
 
-    public static void updateWidgetContent(Context context,
-                                           AppWidgetManager appWidgetManager) {
-
-
-
-        RemoteViews remoteView = new RemoteViews(context.getPackageName(),
-                R.layout.widget_main);
+    private void updateWidgetContent(Context context, AppWidgetManager appWidgetManager) {
+        RemoteViews remoteView = new RemoteViews(context.getPackageName(), R.layout.widget_main);
 
         Intent launchAppIntent = new Intent(context, MainActivity.class);
-        PendingIntent launchAppPendingIntent = PendingIntent.getActivity(context,
-                0, launchAppIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent launchAppPendingIntent = PendingIntent.getActivity(context, 0,
+                launchAppIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteView.setOnClickPendingIntent(R.id.main, launchAppPendingIntent);
 
-        ComponentName tutListWidget = new ComponentName(context,
-                WeatherWidgetProvider.class);
-        appWidgetManager.updateAppWidget(tutListWidget, remoteView);
+        ComponentName weatherWidget = new ComponentName(context, WeatherWidgetProvider.class);
+        appWidgetManager.updateAppWidget(weatherWidget, remoteView);
     }
 }

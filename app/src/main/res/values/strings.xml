@@ -1,13 +1,24 @@
 <resources>
     <string name="app_name">WeatherLight</string>
     <string name="key">9b9be269e4b00091</string>
+    <string name="api_url">http://api.openweathermap.org/data/2.5/weather?q=</string>
 
     <string name="action_settings">About</string>
     <string name="creator">Created by Sébastien Thienpont</string>
 
     <string name="temperature">-/-</string>
-    <string name="button_madrid">Madrid</string>
-    <string name="search_hint">Enter a city name...</string>
-    <string name="search">Search</string>
-    <string name="search_error">Could not find city.</string>
+    <string name="city">Weather for </string>
+    <string name="add_hint">Enter a city name...</string>
+    <string name="add">Add</string>
+    <string name="add_error">Could not find city.</string>
+
+    <string name="add_error_empty">City name cannot be empty.</string>
+    <string name="add_error_duplicate">%s is already added to your list.</string>
+    <string name="add_error_full">You can only have 4 cities, please remove one before adding a new one.</string>
+
+    <string name="connection_error">There was an error getting the weather data.</string>
+
+    <string name="remove_city">Do you want to remove %s?</string>
+    <string name="remove">Remove</string>
+    <string name="cancel">Cancel</string>
 </resources>

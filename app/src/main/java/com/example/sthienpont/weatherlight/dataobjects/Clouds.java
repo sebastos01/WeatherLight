@@ -1,4 +1,3 @@
-
 package com.example.sthienpont.weatherlight.dataobjects;
 
 import java.io.Serializable;
